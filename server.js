@@ -7,7 +7,7 @@ app.use(express.json());
 
 const shortUrlRoutes = require('./routes/shortUrl');
 
-app.use('/', shortUrlRoutes); // now all GET/POST from shortUrl.js work
+app.use('/', shortUrlRoutes); 
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB connected! "))
