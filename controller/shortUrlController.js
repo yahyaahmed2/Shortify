@@ -1,6 +1,6 @@
 const ShortUrl = require('../model/shortUrl');
 const { customAlphabet } = require('nanoid');
-
+//max path length is 6
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6);
 const createShortUrl = async (req, res) => {
   try {
