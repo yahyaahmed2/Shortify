@@ -1,11 +1,14 @@
 const ShortUrl = require('../model/shortUrl');
 const { customAlphabet } = require('nanoid');
-//max path length is 6
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6);
+//length of path is 7, with 3.5 trillion URLS
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 7);
 const createShortUrl = async (req, res) => {
   try {
     const { longUrl } = req.body;
-    if (!longUrl) return res.status(400).json({ message: 'longUrl is required' });
+    if (!longUrl || longUrl.trim() === '') return res.status(400).json(
+      {
+         message: 'longUrl is required' 
+      });
 
     const shortCode = nanoid();
     const newShort = new ShortUrl({ shortCode, longUrl });
