@@ -1,3 +1,4 @@
+const axios = require('axios');
 const ShortUrl = require('../model/shortUrl');
 const { customAlphabet } = require('nanoid');
 //length of path is 7, with 3.5 trillion URLS
@@ -9,6 +10,20 @@ const createShortUrl = async (req, res) => {
       {
          message: 'longUrl is required' 
       });
+    
+    try{
+    new URL(longUrl);
+    }
+    catch{
+      return res.status(400).json({message : 'Invalid URL format' });
+    }
+
+    try{
+      await axios.head(longUrl);
+    }
+    catch{
+      return res.status(404).json({message: 'URL not found' });
+    }
 
     const shortCode = nanoid();
     const newShort = new ShortUrl({ shortCode, longUrl });
