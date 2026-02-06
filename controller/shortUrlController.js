@@ -31,7 +31,9 @@ const createShortUrl = async (req, res) => {
 
     res.status(201).json({
       shortCode,
-      shortUrl: `http://localhost:5000/${shortCode}` 
+      shortUrl: `http://localhost:5000/${shortCode}`,
+      clicks : newShort.clicks,
+      createdAt: newShort.createdAt
     });
   } catch (err) {
     console.error(err);
@@ -55,4 +57,27 @@ const redirectUrl = async (req, res) => {
   }
 };
 
-module.exports = { createShortUrl, redirectUrl };
+const getUrlStats = async (req, res) => {
+  try {
+    const { shortCode } = req.params;
+    
+    // Fixed typo: findOne
+    const url = await ShortUrl.findOne({ shortCode }); 
+
+    if (!url) {
+      return res.status(404).json({ message: 'URL not found' });
+    }
+
+    res.json({
+      shortCode: url.shortCode,
+      longUrl: url.longUrl,
+      clicks: url.clicks || 0, 
+      createdAt: url.createdAt 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { createShortUrl, redirectUrl, getUrlStats };
