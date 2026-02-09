@@ -1,3 +1,4 @@
+const { url } = require('inspector');
 const mongoose = require('mongoose');
 
 const urlSchema = new mongoose.Schema({
@@ -8,4 +9,13 @@ const urlSchema = new mongoose.Schema({
     expiryDate: { type: Date }
 });
 
-module.exports = mongoose.model('Url', urlSchema);
+const user = new mongoose.Schema({
+    userName: {type: String, required: true, unique: true},
+    email: {type: String, required: true, unique: true},
+    password: {type: String, required: true, minlength: 8}
+});
+
+const Url = mongoose.model('Url', urlSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = { Url, User };

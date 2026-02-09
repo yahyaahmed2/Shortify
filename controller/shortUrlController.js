@@ -1,8 +1,25 @@
 const axios = require('axios');
+const bcrypt = require('bcrypt');
 const ShortUrl = require('../model/shortUrl');
+const User = require('../model/User');
 const { customAlphabet } = require('nanoid');
 //length of path is 7, with 3.5 trillion URLS
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 7);
+const saltRounds = 10;
+
+
+const signUp = async(req, res) => {
+  try{
+    const {userName, email, password} = req.body;
+    if (password.length < 8){
+      console.log("Password too short. Minimum charachters 8");
+    }
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+      const storedPass = 
+    });
+
+  }
+};
 const createShortUrl = async (req, res) => {
   try {
     const { longUrl } = req.body;
@@ -61,7 +78,6 @@ const getUrlStats = async (req, res) => {
   try {
     const { shortCode } = req.params;
     
-    // Fixed typo: findOne
     const url = await ShortUrl.findOne({ shortCode }); 
 
     if (!url) {
@@ -80,4 +96,4 @@ const getUrlStats = async (req, res) => {
   }
 };
 
-module.exports = { createShortUrl, redirectUrl, getUrlStats };
+module.exports = { createShortUrl, redirectUrl, getUrlStats, signUp };
