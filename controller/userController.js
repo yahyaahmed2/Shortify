@@ -16,8 +16,8 @@ const signUp = async(req, res) => {
     if (!validator.isEmail(email)){
       return res.status(400).json({message: "Invalid email format"});
     }
-    if (password.length < 8){
-      return res.status(400).json( {message: "Password too short. Minimum charachters 8"} );
+    if (password.length < 8 || password.length > 72){
+      return res.status(400).json( {message: "Error, Password must be between 8 and 72"} );
     }
 
      const existingUser = await User.findOne({
