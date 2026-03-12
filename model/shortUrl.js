@@ -12,7 +12,7 @@ const urlSchema = new mongoose.Schema({
 const user = new mongoose.Schema({
     userName: {type: String, required: true, unique: true},
     email: {type: String, required: true, unique: true},
-    password: {type: String, required: true, minlength: 8}
+    password: {type: String, required: true, minlength: 8, select: false}
 });
 
 const Url = mongoose.model('Url', urlSchema);
