@@ -2,6 +2,7 @@ const { model } = require('mongoose');
 const { User } = require('../model/shortUrl');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 require('dotenv').config();
 const saltRounds = 10;
 
@@ -11,6 +12,9 @@ const signUp = async(req, res) => {
     const {userName, email, password} = req.body;
     if (!userName || !email || !password){
         return res.status(400).json({message: "One or more fields are missing"});
+    }
+    if (!validator.isEmail(email)){
+      return res.status(400).json({message: "Invalid email format"});
     }
     if (password.length < 8){
       return res.status(400).json( {message: "Password too short. Minimum charachters 8"} );
