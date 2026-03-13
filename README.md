@@ -26,3 +26,7 @@ Shortify is a URL shortener built with Node.js, and MongoDB database, and utiliz
 - deployment with CI/CD pipelines
 
 inspired by Bitly, and TinyURL
+
+### Current Architecture
+
+![image](https://image2url.com/r2/default/images/1773436449665-89c46602-2a93-4a0a-906a-e4b6173e41d8.png)
