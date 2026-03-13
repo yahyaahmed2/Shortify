@@ -29,4 +29,5 @@ inspired by Bitly, and TinyURL
 
 ### Current Architecture
 
-![image](https://image2url.com/r2/default/images/1773436449665-89c46602-2a93-4a0a-906a-e4b6173e41d8.png)
+<img width="1049" height="725" alt="Screenshot (315)" src="https://github.com/user-attachments/assets/22039db5-5a31-496d-b639-98f3644e2a75" />
+
