@@ -1,5 +1,5 @@
 const axios = require('axios');
-const ShortUrl = require('../model/shortUrl');
+const { ShortUrl }= require('../model/shortUrl');
 const { customAlphabet } = require('nanoid');
 //length of path is 7, with 3.5 trillion URLS
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 7);
