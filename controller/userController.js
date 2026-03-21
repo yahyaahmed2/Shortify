@@ -10,20 +10,23 @@ const saltRounds = 10;
 const signUp = async(req, res) => {
   try{
     const {userName, email, password} = req.body;
-    if (!userName || !email || !password){
+    const normalizedEmail = validator.normalizeEmail(email);
+    if (!userName || !normalizedEmail || !password){
         return res.status(400).json({message: "One or more fields are missing"});
     }
-    if (!validator.isEmail(email)){
+    if (!validator.isEmail(normalizedEmail)){
       return res.status(400).json({message: "Invalid email format"});
     }
-    if (password.length < 8 || password.length > 72){
-      return res.status(400).json( {message: "Error, Password must be between 8 and 72"} );
+    if (!validator.isStrongPassword(password, { 
+    minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1 
+    })) {
+      return res.status(400).json({ message: "Password must include atleast 8 charachters, uppercase, lowercase, number, and symbol" });
     }
 
      const existingUser = await User.findOne({
          $or:[
             { userName: userName },
-            { email: email }
+            { email: normalizedEmail }
         ]
     });
 
@@ -33,7 +36,7 @@ const signUp = async(req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const newUser = new User({ userName, email, password: hashedPassword });
+    const newUser = new User({ userName, email: normalizedEmail, password: hashedPassword });
     await newUser.save();
 
     res.status(201).json({ message: 'User created successfully' });
