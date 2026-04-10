@@ -42,8 +42,10 @@ const redirectUrl = async (req, res) => {
     const url = await ShortUrl.findOne({ shortCode });
     if (!url) return res.status(404).json({ message: 'URL not found' });
 
-    url.clicks += 1;
-    await url.save();
+    await ShortUrl.updateOne(
+      { shortCode },
+      { $inc: { clicks: 1 } }
+    );
 
     res.redirect(url.longUrl);
   } catch (err) {
